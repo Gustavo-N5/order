@@ -10,12 +10,17 @@ export class CategoriesService {
   }
   create(createCategoryDto: CreateCategoryDto) {
     return this.repository.category.create({
-      data: createCategoryDto
+      data: {
+        nome: createCategoryDto.nome,
+        ativo: true
+      }
     })
   }
 
   findAll() {
-    return this.repository.category.findMany();
+    return this.repository.category.findMany({
+      where:{ativo: true}
+    });
   }
 
   findOne(id: number) {
@@ -35,6 +40,6 @@ export class CategoriesService {
   }
 
   remove(id: number) {
-    return this.repository.category.delete({where:{id}});
+    return this.repository.category.update({where:{id},data:{ativo:false}});
   }
 }

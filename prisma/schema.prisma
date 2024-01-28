@@ -13,4 +13,17 @@ datasource db {
 model Category{
   id Int @id @default(autoincrement())
   nome String @db.VarChar(50)
+  ativo Boolean
+  produto Product[]
+}
+
+model Product{
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(255)
+  preco Decimal @db.Decimal()
+  descricao String? @db.Text
+  file_path String? @db.VarChar(255)
+  ativo Boolean
+  category Category @relation(fields: [category_id], references: [id])
+  category_id Int
 }
