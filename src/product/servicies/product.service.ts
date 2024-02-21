@@ -26,7 +26,7 @@ export class ProductService {
         preco: createProductDto.preco,
         descricao: createProductDto.descricao,
         ativo: true,
-        category_id: createProductDto.category_id
+        category_id: createProductDto.category_id  
       }
 
     })

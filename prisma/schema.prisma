@@ -10,28 +10,50 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Category{
-  id Int @id @default(autoincrement())
-  nome String @db.VarChar(50)
-  ativo Boolean
+model Category {
+  id      Int       @id @default(autoincrement())
+  nome    String    @db.VarChar(50)
+  ativo   Boolean
   produto Product[]
 }
 
-model Product{
-  id Int @id @default(autoincrement())
-  nome String @db.VarChar(255)
-  preco Decimal @db.Decimal()
-  descricao String? @db.Text
-  file_path String? @db.VarChar(255)
-  ativo Boolean
-  category Category @relation(fields: [category_id], references: [id])
+model Product {
+  id          Int      @id @default(autoincrement())
+  nome        String   @db.VarChar(255)
+  preco       Float    @db.Float()
+  descricao   String?  @db.Text
+  file_path   String?  @db.VarChar(255)
+  ativo       Boolean
+  category    Category @relation(fields: [category_id], references: [id])
   category_id Int
+  orderProduct OrderProduct[]
+
 }
 
-model Client{
-  id Int @id @default(autoincrement())
-  nome String @db.VarChar(100)
-  telefone String @db.VarChar(20)
+model Client {
+  id       Int     @id @default(autoincrement())
+  nome     String  @db.VarChar(100)
+  telefone String  @db.VarChar(20)
   whatsApp String? @db.VarChar(20)
-  ativo Boolean
+  ativo    Boolean
+  order    Order[]
+}
+
+model Order {
+  id          Int     @id @default(autoincrement())
+  status      String
+  valor_total Decimal @db.Decimal()
+  client      Client  @relation(fields: [client_id], references: [id])
+  client_id   Int
+  orderProduct OrderProduct[]
+}
+
+model OrderProduct{
+  order Order @relation(fields: [orderId], references: [id])
+  orderId Int 
+  product Product @relation(fields: [productId], references: [id])
+  productId Int
+  quantidade Int
+
+  @@id([orderId, productId])
 }
