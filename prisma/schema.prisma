@@ -42,7 +42,7 @@ model Client {
 model Order {
   id          Int     @id @default(autoincrement())
   status      String
-  valor_total Decimal @db.Decimal()
+  valor_total Float
   client      Client  @relation(fields: [client_id], references: [id])
   client_id   Int
   orderProduct OrderProduct[]

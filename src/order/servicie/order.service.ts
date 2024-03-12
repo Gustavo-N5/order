@@ -32,7 +32,7 @@ export class OrderService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} order`;
+    return this.prismaServicie.order.findUniqueOrThrow({where: {id: id}});
   }
 
   update(id: number, updateOrderDto: UpdateOrderDto) {
